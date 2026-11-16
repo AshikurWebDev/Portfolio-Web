@@ -1,0 +1,122 @@
+.feed {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 18px 20px 14px;
+  border-radius: 16px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.82rem;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+}
+
+.feed__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.feed__title {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.feed__sync {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #d6f3e4;
+  color: var(--accent-deep);
+  font-weight: 600;
+  font-size: 0.72rem;
+}
+.feed__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: feed-blink 1.6s steps(1) infinite;
+}
+@keyframes feed-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.feed__head,
+.feed__row {
+  display: grid;
+  grid-template-columns: 0.8fr 0.7fr 1fr 1.1fr 0.9fr;
+  align-items: center;
+  gap: 8px;
+}
+.feed__head {
+  padding: 0 0 8px;
+  color: var(--ink-faint);
+  font-size: 0.7rem;
+  font-weight: 500;
+  border-bottom: 1px solid #e6e9e4;
+}
+.feed__rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.feed__row {
+  padding: 9px 0;
+  border-bottom: 1px solid #f0f2ee;
+  animation: feed-in 600ms var(--ease-out);
+}
+.feed__row:first-child {
+  background: linear-gradient(90deg, rgba(14, 168, 95, 0.08), transparent 70%);
+}
+@keyframes feed-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+.feed__mono {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+}
+.feed__door {
+  color: var(--ink-soft);
+}
+.feed__chip {
+  justify-self: start;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #d6f3e4;
+  color: var(--accent-deep);
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+.feed__note {
+  margin: 10px 0 0;
+  color: var(--ink-faint);
+  font-size: 0.68rem;
+  text-align: right;
+}
+
+@media (max-width: 520px) {
+  .feed {
+    left: 5%;
+    right: 5%;
+    padding: 14px;
+    font-size: 0.74rem;
+  }
+  .feed__head,
+  .feed__row {
+    grid-template-columns: 0.8fr 0.7fr 1fr 0.9fr;
+  }
+  .feed__head span:nth-child(4),
+  .feed__door {
+    display: none;
+  }
+}

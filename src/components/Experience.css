@@ -1,0 +1,120 @@
+.exp {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(96px, 12vw, 200px) var(--gutter) clamp(48px, 5vw, 80px);
+}
+
+.exp__head {
+  margin-bottom: clamp(32px, 4vw, 60px);
+}
+.exp__title {
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--step-display);
+  font-weight: 450;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  padding-bottom: 0.05em;
+}
+.exp__title-inner {
+  display: inline-block;
+}
+
+.exp__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(13, 15, 14, 0.14);
+}
+.exp__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.2fr) minmax(0, 1.1fr);
+  gap: 14px clamp(24px, 3vw, 56px);
+  align-items: start;
+  padding: clamp(26px, 3vw, 40px) 0;
+  border-bottom: 1px solid rgba(13, 15, 14, 0.14);
+  isolation: isolate;
+}
+/* Hover: a white band rises behind the row, clipped to the page frame */
+.exp__row::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 -16px;
+  border-radius: 14px;
+  background: #fff;
+  transform: scaleY(0.6);
+  opacity: 0;
+  transition:
+    transform 500ms var(--ease-out),
+    opacity 400ms var(--ease-out);
+}
+.exp__row:hover::before {
+  transform: scaleY(1);
+  opacity: 1;
+}
+
+.exp__when {
+  display: grid;
+  gap: 4px;
+}
+.exp__dates {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--ink);
+}
+.exp__type {
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+}
+.exp__role-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.3rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  transition: color 400ms var(--ease-out);
+}
+.exp__row:hover .exp__role-title {
+  color: var(--accent-deep);
+}
+.exp__org {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+}
+.exp__points {
+  margin: 0;
+  padding-left: 1.1em;
+  color: var(--ink);
+}
+.exp__points li {
+  padding: 2px 0;
+}
+.exp__points li::marker {
+  color: var(--ink-faint);
+}
+
+/* The open slot reads lighter until hovered */
+.exp__row--next .exp__role-title,
+.exp__row--next .exp__dates {
+  color: var(--ink-faint);
+}
+.exp__row--next:hover .exp__role-title {
+  color: var(--accent-deep);
+}
+.exp__next-cta {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+@media (max-width: 860px) {
+  .exp__row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .exp__row::before {
+    inset: 0 -8px;
+  }
+}

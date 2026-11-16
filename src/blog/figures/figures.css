@@ -1,0 +1,162 @@
+/* Shared parts for blog figures. Figures always sit on the dark stage. */
+.fig-flow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  color: var(--on-dark);
+}
+.fig-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 14px;
+  border: 1px solid rgba(244, 245, 242, 0.16);
+  border-radius: 12px;
+  background: rgba(244, 245, 242, 0.035);
+}
+.fig-node--accent {
+  border-color: rgba(14, 168, 95, 0.7);
+  background: rgba(14, 168, 95, 0.1);
+}
+.fig-node__code {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: rgba(244, 245, 242, 0.55);
+}
+.fig-node__name {
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.fig-node__note {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: rgba(244, 245, 242, 0.68);
+}
+.fig-node__note code {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--mint);
+}
+
+/* Connector between nodes, with a pulse that travels along it */
+.fig-link {
+  position: relative;
+  align-self: center;
+  width: 100%;
+  min-width: 22px;
+  height: 1px;
+  background: rgba(244, 245, 242, 0.28);
+}
+.fig-link::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: fig-travel 2.4s var(--ease-in-out) infinite;
+}
+@keyframes fig-travel {
+  from {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  to {
+    transform: translateX(var(--fig-link-len, 40px));
+    opacity: 0;
+  }
+}
+.fig-flow--h {
+  grid-auto-columns: auto;
+  grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr) 40px minmax(0, 1fr) 40px minmax(0, 1fr);
+}
+
+@media (max-width: 720px) {
+  .fig-flow--h {
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+  .fig-flow--h .fig-link {
+    justify-self: start;
+    margin-left: 24px;
+    width: 1px;
+    min-width: 0;
+    height: 22px;
+  }
+  .fig-flow--h .fig-link::after {
+    left: -2px;
+    animation-name: fig-travel-v;
+  }
+}
+@keyframes fig-travel-v {
+  from {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15%,
+  85% {
+    opacity: 1;
+  }
+  to {
+    transform: translateY(18px);
+    opacity: 0;
+  }
+}
+
+/* Small data table inside a figure */
+.fig-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--on-dark);
+}
+.fig-table th,
+.fig-table td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(244, 245, 242, 0.1);
+}
+.fig-table th {
+  font-weight: 500;
+  color: rgba(244, 245, 242, 0.55);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Phones: tighter cells so a four-column table fits inside the stage */
+@media (max-width: 480px) {
+  .fig-table {
+    font-size: 0.76rem;
+  }
+  .fig-table th,
+  .fig-table td {
+    padding: 7px 6px;
+  }
+  .fig-table th {
+    font-size: 0.64rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fig-link::after {
+    animation: none;
+    opacity: 0;
+  }
+}

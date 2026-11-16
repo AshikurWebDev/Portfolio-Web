@@ -1,0 +1,33 @@
+.roll {
+  display: inline-block;
+  line-height: 1.1;
+}
+.roll__track {
+  display: inline-flex;
+}
+.roll__char {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  transition: none;
+}
+.roll__a,
+.roll__b {
+  display: block;
+  transition: transform 520ms var(--ease-out);
+  transition-delay: inherit;
+}
+.roll__b {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(110%);
+}
+.roll-host:hover .roll__a,
+.roll-host:focus-visible .roll__a {
+  transform: translateY(-110%);
+}
+.roll-host:hover .roll__b,
+.roll-host:focus-visible .roll__b {
+  transform: translateY(0);
+}

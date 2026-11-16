@@ -1,0 +1,216 @@
+.contact {
+  background: var(--stage);
+  color: var(--on-dark);
+}
+.contact__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(96px, 12vw, 200px) var(--gutter) clamp(72px, 8vw, 120px);
+}
+
+.contact__title {
+  margin: 0;
+  font-size: clamp(2.4rem, 0.9rem + 5vw, 6.6rem);
+  font-weight: 450;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+.contact__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+.contact__line-inner {
+  display: inline-block;
+}
+
+.contact__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: clamp(32px, 5vw, 96px);
+  margin-top: clamp(48px, 6vw, 88px);
+  align-items: start;
+}
+
+/* Form card */
+.contact__card {
+  min-width: 0;
+  padding: clamp(20px, 2.4vw, 36px);
+  border-radius: var(--radius-stage);
+  background: #fff;
+  color: var(--ink);
+}
+.tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 26px;
+  border-radius: 999px;
+  background: var(--bg);
+}
+.tabs__tab {
+  min-height: 42px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-mid) var(--ease-out),
+    color var(--dur-mid) var(--ease-out);
+}
+.tabs__tab:hover {
+  color: var(--ink);
+}
+.tabs__tab.is-active {
+  background: var(--ink);
+  color: #fff;
+}
+
+.contact__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+}
+.field {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+.field--wide {
+  grid-column: 1 / -1;
+}
+.field label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.field input,
+.field textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--line-field);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+.field textarea {
+  resize: vertical;
+  min-height: 132px;
+}
+.field input::placeholder {
+  /* 4.7:1 on the white field */
+  color: #6d746f;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--focus);
+  box-shadow: 0 0 0 1px var(--focus), 0 0 0 5px rgba(8, 122, 68, 0.16);
+}
+.field.has-error input,
+.field.has-error textarea {
+  border-color: var(--danger);
+}
+.field__error {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--danger);
+}
+
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact__submit {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+  margin-top: 6px;
+}
+.contact__submit .pill[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+}
+.contact__status {
+  margin: 0;
+  font-size: 0.92rem;
+}
+.contact__status--done {
+  color: var(--accent-deep);
+}
+.contact__status--error {
+  color: var(--danger);
+}
+
+/* Direct contacts */
+.contact__direct {
+  display: grid;
+}
+.contact__direct-lede {
+  margin: 0 0 12px;
+  color: rgba(244, 245, 242, 0.62);
+}
+.direct {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+  min-height: 56px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(244, 245, 242, 0.14);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.direct:last-child {
+  border-bottom: 1px solid rgba(244, 245, 242, 0.14);
+}
+.direct__label {
+  font-size: 0.88rem;
+  color: rgba(244, 245, 242, 0.6);
+}
+.direct__value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
+  font-weight: 500;
+}
+.direct:hover .direct__value {
+  color: #6fe3a7;
+}
+
+@media (max-width: 900px) {
+  .contact__body {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .contact__form {
+    grid-template-columns: 1fr;
+  }
+  .tabs {
+    display: flex;
+  }
+  .tabs__tab {
+    flex: 1;
+    padding: 0 10px;
+  }
+  .direct {
+    grid-template-columns: 76px minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,55 @@
+# Caddy: the only container open to the internet (ports 80 and 443).
+#
+# {$DOMAIN} comes from deploy/.env. With a real domain whose DNS points at this
+# server, Caddy gets and renews a Let's Encrypt certificate on its own and
+# redirects http to https. For a local test, DOMAIN=localhost gives a
+# self-signed certificate.
+#
+# Everything is served from one origin: the website, /api, /mcp and /health.
+# That keeps the refresh-token cookie (SameSite=Strict, path /api/auth) working
+# and means the API needs no CORS setup.
+
+{$DOMAIN} {
+	encode zstd gzip
+
+	# The admin uploads design images up to 15 MB; allow a little headroom.
+	request_body {
+		max_size 20MB
+	}
+
+	# API, MCP server, SignalR hub (live updates, WebSockets) and health check go to the
+	# ASP.NET Core container. Caddy upgrades WebSocket connections on its own and sets
+	# X-Forwarded-For and X-Forwarded-Proto, which Program.cs reads.
+	@backend path /api/* /mcp /mcp/* /hubs/* /health
+	handle @backend {
+		reverse_proxy api:8080 {
+			# MCP replies can stream; send bytes on as they arrive.
+			flush_interval -1
+		}
+	}
+
+	# Everything else is the React app.
+	handle {
+		root * /srv
+
+		# Hashed build files never change, so browsers may keep them for a year.
+		@assets path /assets/*
+		header @assets Cache-Control "public, max-age=31536000, immutable"
+
+		# index.html must always be checked again so a new deploy shows up at once.
+		@html path / /index.html
+		header @html Cache-Control "no-cache"
+
+		# Client-side routes (/blog/some-post, /admin/design) have no file on disk:
+		# serve index.html and let React Router show the page.
+		try_files {path} /index.html
+		file_server
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Frame-Options DENY
+		-Server
+	}
+}

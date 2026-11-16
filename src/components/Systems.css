@@ -1,0 +1,184 @@
+.systems {
+  max-width: var(--max);
+  margin: 0 auto;
+  /* No bottom padding: each .sys card already ends with its own bottom padding. */
+  padding: clamp(48px, 5vw, 80px) var(--gutter) 0;
+}
+
+.systems__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+  align-items: end;
+  gap: 32px;
+  margin-bottom: clamp(40px, 6vw, 88px);
+}
+.systems__title {
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--step-display);
+  font-weight: 450;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  padding-bottom: 0.05em;
+}
+.systems__title-inner {
+  display: inline-block;
+}
+.systems__lede {
+  margin: 0 0 1.2em;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/*
+  Cards share row tracks (subgrid), so media, titles, spec sheets, feature
+  lists and buttons line up across cards whatever the text length.
+*/
+.systems__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(24px, 3vw, 48px);
+  row-gap: 0;
+}
+.sys {
+  display: grid;
+  grid-row: span 6;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  align-content: start;
+  padding-bottom: clamp(72px, 8vw, 120px);
+}
+
+.sys__media {
+  position: relative;
+  aspect-ratio: 4 / 3.2;
+  border-radius: var(--radius-stage);
+  overflow: hidden;
+  isolation: isolate;
+}
+.sys__media--dark {
+  background:
+    radial-gradient(80% 70% at 30% 20%, rgba(14, 168, 95, 0.28), transparent 70%),
+    var(--stage);
+}
+.sys__media--stone {
+  background: #e6e4d8;
+}
+.sys__media--accent {
+  background: var(--accent);
+}
+.sys__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.sys__media-inner {
+  position: absolute;
+  inset: -6% 0;
+}
+
+.sys__title {
+  margin: 28px 0 0;
+  font-size: clamp(1.9rem, 1.3rem + 1.8vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.sys__summary {
+  max-width: 36em;
+  margin: 14px 0 0;
+  color: var(--ink-soft);
+}
+
+/* Spec sheet */
+.sys__spec {
+  margin: 26px 0 0;
+  border-top: 1px solid rgba(13, 15, 14, 0.14);
+}
+.sys__spec > div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 16px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(13, 15, 14, 0.14);
+}
+.sys__spec dt {
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+}
+.sys__spec dd {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.sys__state {
+  font-weight: 600;
+}
+.sys__state--live,
+.sys__state--completed {
+  color: var(--accent-deep) !important;
+}
+
+.sys__features {
+  margin-top: 26px;
+}
+.sys__features-title {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-faint);
+}
+.sys__list {
+  margin: 0;
+  padding: 0 0 0 1.1em;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+.sys__list li {
+  padding: 3px 0;
+}
+.sys__list li::marker {
+  color: var(--ink-faint);
+}
+.sys__list li.is-wip {
+  color: var(--ink-soft);
+}
+.sys__wip {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+.sys__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 10px;
+  margin-top: 28px;
+}
+.sys__soon {
+  background: transparent;
+  color: var(--ink-faint);
+  box-shadow: inset 0 0 0 1.5px var(--bg-soft);
+  cursor: default;
+}
+
+@media (max-width: 900px) {
+  .systems__head {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .systems__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .sys__media {
+    aspect-ratio: 4 / 4.2;
+  }
+  .sys__spec > div {
+    grid-template-columns: 80px minmax(0, 1fr);
+  }
+}

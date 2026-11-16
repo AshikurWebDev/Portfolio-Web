@@ -1,0 +1,341 @@
+.hero {
+  padding: 0 var(--gutter);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+/* Statement sits in the header row, between brand and actions */
+.hero__head {
+  min-height: var(--header-h);
+  padding: 26px clamp(220px, 20vw, 300px) 0 clamp(0px, 24vw, 460px);
+}
+.hero__title {
+  margin: 0;
+  max-width: 19em;
+  font-size: var(--step-statement);
+  font-weight: 450;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+.hero__word {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+  margin-right: 0.24em;
+  vertical-align: top;
+}
+.hero__word-inner {
+  display: inline-block;
+}
+
+/* Dark stage for the 3D cluster */
+.hero__stage {
+  position: relative;
+  margin-top: clamp(24px, 3vw, 40px);
+  height: clamp(420px, calc(100svh - 250px), 980px);
+  border-radius: var(--radius-stage);
+  overflow: hidden;
+  background:
+    radial-gradient(70% 80% at 55% 45%, var(--stage-soft), transparent 75%),
+    var(--stage);
+  isolation: isolate;
+}
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s var(--ease-out);
+}
+.hero__stage.is-ready .hero__canvas {
+  opacity: 1;
+}
+
+.stage-loader {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.stage-loader__bar {
+  position: relative;
+  width: 120px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+}
+.stage-loader__bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--on-dark);
+  transform-origin: left;
+  animation: load 1.4s var(--ease-in-out) infinite;
+}
+@keyframes load {
+  0% {
+    transform: scaleX(0);
+  }
+  60% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  61% {
+    transform-origin: right;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+}
+
+.stage-static {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.stage-static__logo {
+  width: min(46%, 520px);
+  aspect-ratio: 535 / 283;
+  background: var(--accent);
+  -webkit-mask: url('/media/logo.png') center / contain no-repeat;
+  mask: url('/media/logo.png') center / contain no-repeat;
+}
+
+/* Portrait stands at the bottom-left of the stage, cut at the folded arms */
+.hero__photo {
+  position: absolute;
+  z-index: 1;
+  left: clamp(8px, 4vw, 72px);
+  bottom: 0;
+  height: 80%;
+  width: auto;
+  max-width: 46%;
+  object-fit: contain;
+  object-position: bottom left;
+  pointer-events: none;
+}
+
+.hero__id {
+  position: absolute;
+  z-index: 2;
+  left: clamp(16px, 2vw, 28px);
+  top: clamp(16px, 2vw, 28px);
+  color: var(--on-dark);
+}
+.hero__id p {
+  margin: 0;
+}
+.hero__name {
+  font-size: clamp(0.95rem, 0.85rem + 0.45vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.hero__role {
+  margin-top: 2px !important;
+  font-size: 0.9rem;
+  color: rgba(244, 245, 242, 0.72);
+}
+/* Training credential: top-right of the stage on desktop, under the stage on phones */
+.hero__cred {
+  position: absolute;
+  z-index: 2;
+  right: clamp(16px, 2vw, 28px);
+  top: clamp(16px, 2vw, 28px);
+  display: grid;
+  gap: 2px;
+  width: fit-content;
+  padding: 10px 16px;
+  border: 1px solid rgba(244, 245, 242, 0.2);
+  border-radius: 14px;
+  background: rgba(12, 14, 13, 0.55);
+  color: var(--on-dark);
+  backdrop-filter: blur(6px);
+  transition: border-color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
+}
+.hero__cred:hover {
+  border-color: rgba(244, 245, 242, 0.4);
+  background: rgba(12, 14, 13, 0.75);
+}
+.hero__cred-org {
+  font-size: 0.86rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.hero__cred-track {
+  font-size: 0.8rem;
+  color: rgba(244, 245, 242, 0.75);
+}
+
+.hero__status {
+  position: absolute;
+  z-index: 2;
+  right: clamp(16px, 2vw, 28px);
+  bottom: clamp(16px, 2vw, 28px);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--on-dark);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+.hero__pulse {
+  position: relative;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.hero__pulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2.4s var(--ease-out) infinite;
+}
+@keyframes pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+.hero__cred--rail {
+  display: none !important;
+  position: static;
+  width: auto;
+  margin: 14px 0 0;
+  background: var(--ink);
+  backdrop-filter: none;
+}
+.hero__status--rail {
+  display: none !important;
+  position: static;
+  justify-content: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  background: var(--ink);
+  font-size: 0.7rem;
+}
+
+/* Rail under the stage: plus markers and three labels */
+.hero__rail {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 0 8px;
+  color: var(--ink-soft);
+}
+.hero__rail-left {
+  justify-self: start;
+}
+.hero__rail-mid {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.hero__rail-mid:hover {
+  color: var(--accent);
+}
+.hero__rail-right {
+  justify-self: end;
+  text-align: right;
+}
+.hero__plus {
+  position: relative;
+  width: 12px;
+  height: 12px;
+}
+.hero__plus::before,
+.hero__plus::after {
+  content: '';
+  position: absolute;
+  background: var(--ink);
+}
+.hero__plus::before {
+  left: 0;
+  right: 0;
+  top: 5px;
+  height: 2px;
+}
+.hero__plus::after {
+  top: 0;
+  bottom: 0;
+  left: 5px;
+  width: 2px;
+}
+
+@media (max-width: 1100px) {
+  .hero__head {
+    padding-left: 0;
+    padding-top: calc(var(--header-h) - 8px);
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero__stage {
+    height: 62svh;
+    min-height: 380px;
+  }
+  .hero__rail {
+    grid-template-columns: auto 1fr auto;
+  }
+  .hero__rail-left,
+  .hero__rail-right {
+    display: none;
+  }
+  .hero__rail-mid {
+    justify-self: center;
+  }
+  .hero__stage {
+    height: 78svh;
+    min-height: 560px;
+  }
+  /*
+    Centered by layout (left/right 0 + auto margins), not by translate: -50%.
+    The GSAP entrance animates this image's transform and folds any CSS translate into it as a
+    fixed pixel value at that moment. If the photo had not loaded yet (slow phone networks), that
+    value was 0 and the photo sat right of center. Auto margins keep it centered at any time.
+  */
+  .hero__photo {
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    height: 52%;
+    max-width: 80%;
+    object-position: bottom center;
+  }
+  /* On phones the status and credential leave the stage (they covered the scene) and sit under it */
+  .hero__stage .hero__status,
+  .hero__stage .hero__cred {
+    display: none;
+  }
+  .hero__cred--rail {
+    display: grid !important;
+  }
+  .hero__status--rail {
+    display: flex !important;
+  }
+}
+
+/* Keep "from <date>" together when the status pill wraps on narrow phones */
+.hero__date {
+  white-space: nowrap;
+}

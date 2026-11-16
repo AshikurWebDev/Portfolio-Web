@@ -1,0 +1,231 @@
+.design {
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.design__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 18px;
+}
+.design__title {
+  margin: 0;
+  font-size: clamp(1.3rem, 1rem + 0.8vw, 1.8rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+.design__count {
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+/*
+  Justified rows. --row is the target row height; --r is each image's width / height.
+  flex-basis = r x row  -> every image starts at the same height, at its own width.
+  flex-grow  = r        -> leftover width is shared in proportion to width, so heights stay equal
+                           while the row stretches to fill the line.
+  The ::after filler (huge flex-grow) soaks up the space in the last row, so a short last row keeps
+  the target height instead of blowing up.
+*/
+.design__grid {
+  --row: clamp(120px, 15vw, 230px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(8px, 1vw, 14px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.design__grid::after {
+  content: '';
+  flex: 1000000 1 0;
+}
+.design__item {
+  position: relative;
+  flex: var(--r) 1 calc(var(--r) * var(--row));
+  /* Very wide banners would otherwise force a row of their own on phones; let them shrink. */
+  min-width: 0;
+  max-width: 100%;
+}
+.design__open {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-soft);
+  cursor: zoom-in;
+}
+.design__open img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* The box already has the image's own ratio (inline style), so nothing is cropped. */
+  object-fit: cover;
+  transition: transform 700ms var(--ease-out);
+}
+.design__caption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 28px 12px 10px;
+  background: linear-gradient(to top, rgba(12, 14, 13, 0.78), transparent);
+  color: var(--on-dark);
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity var(--dur-mid) var(--ease-out),
+    transform var(--dur-mid) var(--ease-out);
+}
+@media (hover: hover) {
+  .design__open:hover img {
+    transform: scale(1.04);
+  }
+  .design__open:hover .design__caption,
+  .design__open:focus-visible .design__caption {
+    opacity: 1;
+    transform: none;
+  }
+}
+.design__open:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+@media (max-width: 560px) {
+  .design__grid {
+    --row: 110px;
+  }
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: clamp(56px, 7vw, 80px) clamp(12px, 6vw, 96px) clamp(16px, 3vw, 32px);
+  border: 0;
+  background: transparent;
+  color: var(--on-dark);
+  overflow: hidden;
+}
+.lightbox::backdrop {
+  background: rgba(8, 10, 9, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.lightbox[open] {
+  display: grid;
+  place-items: center;
+  animation: lightbox-in 240ms var(--ease-out);
+}
+.lightbox__figure {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+}
+.lightbox__figure img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100dvh - 190px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8);
+}
+.lightbox__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 20px;
+  width: 100%;
+}
+.lightbox__caption {
+  font-weight: 500;
+}
+.lightbox__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+.lightbox__count {
+  color: rgba(244, 245, 242, 0.65);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.lightbox__link {
+  color: var(--mint);
+  font-size: 0.9rem;
+  text-underline-offset: 3px;
+}
+.lightbox__nav,
+.lightbox__close {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgba(244, 245, 242, 0.18);
+  border-radius: 50%;
+  background: rgba(244, 245, 242, 0.08);
+  color: var(--on-dark);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-out);
+}
+.lightbox__nav:hover,
+.lightbox__close:hover {
+  background: rgba(244, 245, 242, 0.2);
+}
+.lightbox__nav:focus-visible,
+.lightbox__close:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+.lightbox__nav {
+  top: 50%;
+  translate: 0 -50%;
+}
+.lightbox__nav--prev {
+  left: clamp(8px, 2vw, 28px);
+}
+.lightbox__nav--next {
+  right: clamp(8px, 2vw, 28px);
+}
+.lightbox__close {
+  top: clamp(8px, 2vw, 20px);
+  right: clamp(8px, 2vw, 28px);
+}
+@media (max-width: 560px) {
+  /* Phones: arrows sit at the bottom corners so they never cover the image. */
+  .lightbox__nav {
+    top: auto;
+    bottom: 14px;
+    translate: none;
+  }
+}
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lightbox[open],
+  .design__open img,
+  .design__caption {
+    animation: none;
+    transition: none;
+  }
+}

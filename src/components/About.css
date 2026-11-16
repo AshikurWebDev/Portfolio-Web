@@ -1,0 +1,93 @@
+/* A whole field of deep emerald: the one colour moment on the page */
+.about {
+  background: var(--accent-deep);
+  color: #fff;
+}
+.about__inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: clamp(96px, 12vw, 200px) var(--gutter);
+}
+
+.about__statement {
+  margin: 0;
+  max-width: 17em;
+  font-size: clamp(2.2rem, 1rem + 4.2vw, 5.4rem);
+  font-weight: 450;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.about__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 120px);
+  margin-top: clamp(48px, 6vw, 96px);
+  align-items: start;
+}
+
+.about__text p {
+  margin: 0 0 18px;
+  max-width: 34em;
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.9);
+}
+.about__text .about__next {
+  color: #fff;
+  font-weight: 500;
+}
+.about__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+.about__ghost {
+  background: transparent;
+  color: #fff;
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.5);
+}
+.about__ghost:hover {
+  background: #fff;
+  color: var(--ink);
+}
+
+.about__record {
+  margin: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+.about__record > div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+.about__record dt {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.9); /* >= 4.5:1 on deep emerald */
+}
+.about__record dd {
+  margin: 0;
+  display: grid;
+  gap: 2px;
+}
+.about__record dd span {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9); /* >= 4.5:1 on deep emerald */
+}
+.about__record dd span.is-strong {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .about__body {
+    grid-template-columns: 1fr;
+  }
+  .about__record > div {
+    grid-template-columns: 90px minmax(0, 1fr);
+  }
+}
