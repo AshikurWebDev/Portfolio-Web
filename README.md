@@ -206,8 +206,9 @@ All three are read at build time. `.env` is git-ignored; only `.env.example` is 
 ## Deployment
 
 `Dockerfile` builds the site with Node and packs `dist/` into a Caddy image. `Caddyfile` serves the
-files with an SPA fallback, proxies `/api`, `/mcp` and `/health` to the API container, sets cache
-headers and obtains HTTPS certificates automatically.
+files with an SPA fallback, proxies `/api`, `/mcp`, `/hubs` and `/health` to the API container and sets
+cache headers. It runs either standalone (owning HTTPS itself) or behind a shared edge proxy that serves
+several domains from one server; in both cases the API receives the visitor's real IP.
 
 The full stack (PostgreSQL, API and this image) is started with Docker Compose from the backend
 repository. Step-by-step VPS guide: [Portfolio-API/deploy](https://github.com/AshikurWebDev/Portfolio-API/tree/main/deploy).

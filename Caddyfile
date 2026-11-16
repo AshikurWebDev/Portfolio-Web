@@ -1,9 +1,19 @@
-# Caddy: the only container open to the internet (ports 80 and 443).
+# Caddy for the portfolio. Two ways to run it (see the backend repo's deploy/README.md):
 #
-# {$DOMAIN} comes from deploy/.env. With a real domain whose DNS points at this
-# server, Caddy gets and renews a Let's Encrypt certificate on its own and
-# redirects http to https. For a local test, DOMAIN=localhost gives a
-# self-signed certificate.
+#   Standalone: this container owns ports 80 and 443. {$DOMAIN} is the real domain;
+#               Caddy gets and renews a Let's Encrypt certificate on its own.
+#   Shared:     an "edge" Caddy in front owns 80/443 and HTTPS for several sites.
+#               Then DOMAIN=":80" and this container serves plain HTTP inside Docker.
+#
+# For a local test, DOMAIN=localhost gives a self-signed certificate.
+
+{
+	servers {
+		# Trust X-Forwarded-* headers only from private Docker addresses (the edge proxy),
+		# so {client_ip} below is the visitor's real IP, never a value a visitor made up.
+		trusted_proxies static private_ranges
+	}
+}
 #
 # Everything is served from one origin: the website, /api, /mcp and /health.
 # That keeps the refresh-token cookie (SameSite=Strict, path /api/auth) working
@@ -25,6 +35,8 @@
 		reverse_proxy api:8080 {
 			# MCP replies can stream; send bytes on as they arrive.
 			flush_interval -1
+			# One clean client IP for the API's rate limits, also when an edge proxy sits in front.
+			header_up X-Forwarded-For {client_ip}
 		}
 	}
 
