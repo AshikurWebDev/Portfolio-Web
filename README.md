@@ -3,7 +3,7 @@
 The frontend of my developer portfolio: a React 19 + TypeScript single-page app that presents the
 ERP systems I build, a technical blog, and an admin dashboard for managing all of it.
 
-It talks to a separate ASP.NET Core Web API: **[portfolio-api](https://github.com/AshikurWebDev/portfolio-api)**.
+It talks to a separate ASP.NET Core Web API: **[Portfolio-API](https://github.com/AshikurWebDev/Portfolio-API)**.
 
 ![Preview of the portfolio](public/media/og-image.jpg)
 
@@ -149,15 +149,15 @@ Dockerfile, Caddyfile  Production image (see Deployment)
 Requirements: Node.js 20 or newer.
 
 ```bash
-git clone https://github.com/AshikurWebDev/portfolio-web.git
-cd portfolio-web
+git clone https://github.com/AshikurWebDev/Portfolio-Web.git
+cd Portfolio-Web
 npm install
 cp .env.example .env     # optional: leave VITE_API_URL empty to run on static content only
 npm run dev              # http://localhost:5173
 ```
 
 To use the admin dashboard and live data, run the API from
-[portfolio-api](https://github.com/AshikurWebDev/portfolio-api) on port 5180 and set
+[Portfolio-API](https://github.com/AshikurWebDev/Portfolio-API) on port 5180 and set
 `VITE_API_URL=http://localhost:5173` in `.env`. The Vite dev server proxies `/api` to the API, so the
 site and API share one origin and the refresh-token cookie works.
 
@@ -210,7 +210,7 @@ files with an SPA fallback, proxies `/api`, `/mcp` and `/health` to the API cont
 headers and obtains HTTPS certificates automatically.
 
 The full stack (PostgreSQL, API and this image) is started with Docker Compose from the backend
-repository. Step-by-step VPS guide: [portfolio-api/deploy](https://github.com/AshikurWebDev/portfolio-api/tree/main/deploy).
+repository. Step-by-step VPS guide: [Portfolio-API/deploy](https://github.com/AshikurWebDev/Portfolio-API/tree/main/deploy).
 
 ## Author
 
